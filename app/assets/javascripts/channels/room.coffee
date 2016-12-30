@@ -7,10 +7,10 @@ App.room = App.cable.subscriptions.create "RoomChannel",
 
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
+    alert("You have a new mention from #{data.mention_from}") if data.mention
     if data.message?
       $('#messages-table').append data.message
       scroll_bottom()
-
 
 # Tutorial version
 $(document).on 'turbolinks:load', ->
@@ -20,7 +20,6 @@ $(document).on 'turbolinks:load', ->
 submit_message = () ->
   $('#message_content').on 'keydown', (event) ->
     if event.keyCode is 13 && !event.shiftKey
-      console.log 'Hit enter'
       $('input').click()
       event.target.value = ""
       event.preventDefault()
